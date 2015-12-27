@@ -8,7 +8,6 @@
 
     <title><?php echo $page_title; ?></title>
 
-<!-- some custom CSS -->
 <style>
     .left-margin{
         margin:0 .5em 0 0;
@@ -21,7 +20,6 @@
 </style>
 
 <!-- Bootstrap -->
-<!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 
 <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -34,7 +32,6 @@
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
-<!-- Include all compiled plugins (below), or include individual files as needed -->
 <!-- Latest compiled and minified JavaScript -->
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 

@@ -11,7 +11,7 @@ if($page>1){
     echo "</a></li>";
 }
 
-// count all products in the database to calculate total pages
+// count all rows in the database to calculate total pages
 $total_rows = $podaci->countAll();
 $total_pages = ceil($total_rows / $records_per_page);
 

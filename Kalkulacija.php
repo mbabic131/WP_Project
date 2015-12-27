@@ -19,17 +19,17 @@ $from_record_num = ($records_per_page * $page) - $records_per_page;
 include_once 'config/databaseC.php';
 include_once 'objects/podaci.php';
 
-// instantiate database and product object
+// instantiate database and row object
 $database = new \config\databaseC();
 $db = $database->getConnection();
 
 $podaci = new \objects\podaci($db);
 
-// query products
+// query rows
 $stmt = $podaci->readAll($page, $from_record_num, $records_per_page);
 $num = $stmt->rowCount();
 
-// display the products if there are any
+// display the rows if there are any
 if($num>0){
 
     echo "<table class='table table-hover table-responsive table-bordered'>";
@@ -65,9 +65,9 @@ if($num>0){
     include_once 'Lista_podaci.php';
 }
 
-// tell the user there are no products
+// tell the user there are no rows
 else{
-    echo "<div>No products found.</div>";
+    echo "<div>No rows found.</div>";
 }
 
 include_once "footer.php";
@@ -77,7 +77,7 @@ include_once "footer.php";
     $(document).on('click', '.delete-object', function(){
 
         var id = $(this).attr('delete-id');
-        var q = confirm("Are you sure?");
+        var q = confirm("Jeste li sigurni?");
 
         if (q == true){
 
@@ -86,7 +86,7 @@ include_once "footer.php";
             }, function(data){
                 location.reload();
             }).fail(function() {
-                    alert('Unable to delete.');
+                    alert('Brisanje nije uspjelo!.');
                 });
 
         }

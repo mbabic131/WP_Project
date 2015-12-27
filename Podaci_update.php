@@ -6,7 +6,7 @@ echo "<div class='right-button-margin'>";
 echo "<a href='Kalkulacija.php' class='btn btn-default pull-right'>Prikaži podatke o štednji</a>";
 echo "</div>";
 
-// get ID of the product to be edited
+// get ID of the row to be edited
 $id = isset($_GET['id']) ? $_GET['id'] : die('ERROR: missing ID.');
 
 // include database and object files
@@ -17,13 +17,13 @@ include_once 'objects/podaci.php';
 $database = new \config\databaseC();
 $db = $database->getConnection();
 
-// prepare product object
+// prepare row object
 $podaci = new \objects\podaci($db);
 
-// set ID property of product to be edited
+// set ID property of row to be edited
 $podaci->id = $id;
 
-// read the details of product to be edited
+// read the details of row to be edited
 $podaci->readOne();
 ?>
 
@@ -70,14 +70,14 @@ $podaci->readOne();
 // if the form was submitted
 if($_POST){
 
-    // set product property values
+    // set row property values
     $podaci->iznosOrocenja = $_POST['iznosOrocenja'];
     $podaci->periodOrocenja = $_POST['periodOrocenja'];
     $podaci->kamatnaStopa = $_POST['kamatnaStopa'];
     $podaci->zbrojKamata = $_POST['zbrojKamata'];
     $podaci->trenutnaVrijednost = $_POST['trenutnaVrijednost'];
 
-    // update the product
+    // update the row
     if($podaci->update()){
         echo "<div class=\"alert alert-success alert-dismissable\">";
         echo "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>";
@@ -85,7 +85,7 @@ if($_POST){
         echo "</div>";
     }
 
-    // if unable to update the product, tell the user
+    // if unable to update the row, tell the user
     else{
         echo "<div class=\"alert alert-danger alert-dismissable\">";
         echo "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>";

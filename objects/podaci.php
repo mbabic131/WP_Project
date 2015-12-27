@@ -27,10 +27,8 @@ class podaci {
         $this->conn = $db;
     }
 
-    // create product
     function create(){
 
-        //write query
         $query = "INSERT INTO
                     " . $this->table_name . "
                 SET
@@ -67,7 +65,6 @@ class podaci {
         return $stmt;
     }
 
-    // used for paging products
     public function countAll(){
 
         $query = "SELECT id FROM " . $this->table_name . "";
@@ -134,7 +131,6 @@ class podaci {
         }
     }
 
-    // delete the product
     function delete(){
 
         $query = "DELETE FROM " . $this->table_name . " WHERE id = ?";

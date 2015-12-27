@@ -1,8 +1,14 @@
 <?php
-// set page headers
+session_start();
+
 $page_title = "IZRAČUN OROČENE ŠTEDNJE PO DOSPIJEĆU DEPOZITA";
 include_once "header.php";
+?>
 
+<?php
+if(isset($_SESSION['username'])) {
+
+echo "<a href='public/login.php?action=logout'>Log out</a>";
 echo "<div class='right-button-margin'>";
 echo "<a href='Kalkulacija.php' class='btn btn-default pull-right'>Prikaži podatke o štednji</a>";
 echo "</div>";
@@ -16,11 +22,9 @@ $db = $database->getConnection();
 // if the form was submitted
 if($_POST){
 
-    // instantiate product object
     include_once 'objects/podaci.php';
     $podaci = new \objects\podaci($db);
 
-    // set product property values
     $podaci->iznosOrocenja = $_POST['iznosOrocenja'];
     $podaci->periodOrocenja = $_POST['periodOrocenja'];
     $podaci->kamatnaStopa = $_POST['kamatnaStopa'];
@@ -28,7 +32,6 @@ if($_POST){
     $podaci->trenutnaVrijednost = $_POST['trenutnaVrijednost'];
 
 
-    // create the product
     if($podaci->create()){
         echo "<div class=\"alert alert-success alert-dismissable\">";
         echo "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>";
@@ -36,17 +39,16 @@ if($_POST){
         echo "</div>";
     }
 
-    // if unable to create the product, tell the user
     else{
         echo "<div class=\"alert alert-danger alert-dismissable\">";
         echo "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>";
         echo "Pohranjivanje podataka nije uspjelo.";
         echo "</div>";
     }
-}
+}   
+
 ?>
 
-    <!-- HTML form for creating a product -->
     <html>
     <head>
         <script type="text/javascript" src="JS/Izracun.js"></script>
@@ -89,6 +91,13 @@ if($_POST){
 
     </body>
     </html>
+
+<?php } else { ?>
+
+    <h4>Za nastavak korištenja aplikacije morate se <a href="public/login.php">prijaviti</a> ili <a href="">registrirati.</a></h4>
+    
+<?php } ?>
+
 
 <?php
 include_once "footer.php";
