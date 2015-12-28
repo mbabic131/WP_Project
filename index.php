@@ -8,6 +8,7 @@ include_once "header.php";
 <?php
 if(isset($_SESSION['username'])) {
 
+echo "You are loged in as: " . $_SESSION['username'] . "<br>";
 echo "<a href='public/login.php?action=logout'>Log out</a>";
 echo "<div class='right-button-margin'>";
 echo "<a href='Kalkulacija.php' class='btn btn-default pull-right'>Prikaži podatke o štednji</a>";
@@ -94,7 +95,8 @@ if($_POST){
 
 <?php } else { ?>
 
-    <h4>Za nastavak korištenja aplikacije morate se <a href="public/login.php">prijaviti</a> ili <a href="">registrirati.</a></h4>
+    <h4>Za nastavak korištenja aplikacije morate se <a href="public/login.php?action=login">prijaviti</a> ili 
+        <a href="public/registration.php">registrirati.</a></h4>
     
 <?php } ?>
 

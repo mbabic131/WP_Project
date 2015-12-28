@@ -6,6 +6,7 @@
  * Time: 01:02
  */
 
+
 namespace objects;
 
 
@@ -27,20 +28,36 @@ class podaci {
         $this->conn = $db;
     }
 
+    private function getUserId() {
+
+        $username = $_SESSION['username'];
+
+        $user_query = "SELECT * FROM users WHERE username = '{$username}' ";
+        $stmt_user = $this->conn->prepare($user_query);
+        $stmt_user->execute();
+
+        $row = $stmt_user->fetch(\PDO::FETCH_ASSOC);
+        $user_id = $row['id'];
+        return $user_id;
+    }
+
     function create(){
+
+        $user_id = $this->getUserId();
 
         $query = "INSERT INTO
                     " . $this->table_name . "
                 SET
-                    IznosOrocenja = ?, Porocenja = ?, Kstopa = ?, Kamate = ?, Tvrijednost = ?";
+                    user_id = ?, IznosOrocenja = ?, Porocenja = ?, Kstopa = ?, Kamate = ?, Tvrijednost = ?";
 
         $stmt = $this->conn->prepare($query);
 
-        $stmt->bindParam(1, $this->iznosOrocenja);
-        $stmt->bindParam(2, $this->periodOrocenja);
-        $stmt->bindParam(3, $this->kamatnaStopa);
-        $stmt->bindParam(4, $this->zbrojKamata);
-        $stmt->bindParam(5, $this->trenutnaVrijednost);
+        $stmt->bindParam(1, $user_id);
+        $stmt->bindParam(2, $this->iznosOrocenja);
+        $stmt->bindParam(3, $this->periodOrocenja);
+        $stmt->bindParam(4, $this->kamatnaStopa);
+        $stmt->bindParam(5, $this->zbrojKamata);
+        $stmt->bindParam(6, $this->trenutnaVrijednost);
 
         if($stmt->execute()){
             return true;
@@ -52,10 +69,12 @@ class podaci {
 
     function readAll($page, $from_record_num, $records_per_page){
 
+        $user_id = $this->getUserId();
+
         $query = "SELECT
                 id, IznosOrocenja, Porocenja, Kstopa, Kamate, Tvrijednost
             FROM
-                " . $this->table_name . "
+                " . $this->table_name . " WHERE user_id = '$user_id' 
             LIMIT
                 {$from_record_num}, {$records_per_page}";
 
@@ -67,7 +86,9 @@ class podaci {
 
     public function countAll(){
 
-        $query = "SELECT id FROM " . $this->table_name . "";
+        $user_id = $this->getUserId();
+
+        $query = "SELECT id FROM " . $this->table_name . " WHERE user_id = '$user_id'";
 
         $stmt = $this->conn->prepare( $query );
         $stmt->execute();

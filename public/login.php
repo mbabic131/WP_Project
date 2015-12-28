@@ -36,7 +36,9 @@
             <input type="checkbox" value="remember-me"> Remember me
           </label>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit" name="submit">Sign in</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" name="submit">Sign in</button> 
+        <h3>OR</h3>
+        <a href="registration.php"><button class="btn btn-lg btn-primary btn-block" type="button" name="login">Register</button></a>
       </form>
 
     </div> <!-- /container -->
@@ -58,7 +60,7 @@
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $user = new \users\Users($db, $username, $password);
+    $user = new \users\Users($db, $username, $password, null);
 
   } else if($_GET['action'] == 'logout') {
 

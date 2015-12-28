@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 $page_title = "Podaci o štednji";
 include_once "header.php";
 
