@@ -4,72 +4,79 @@ session_start();
 $page_title = "Podaci o štednji";
 include_once "header.php";
 
-echo "<div class='right-button-margin'>";
-echo "<a href='index.php' class='btn btn-default pull-right'>Izračunaj štednju</a>";
-echo "</div>";
+if(isset($_SESSION['username'])) {
 
-// page given in URL parameter, default page is one
-$page = isset($_GET['page']) ? $_GET['page'] : 1;
+    echo "<p><a href='public/login.php?action=logout'>Log out</a></p>";
+    echo "<div class='right-button-margin'>";
+    echo "<a href='index.php' class='btn btn-default pull-right'>Izračunaj štednju</a>";
+    echo "</div>";
 
-// set number of records per page
-$records_per_page = 5;
+    // page given in URL parameter, default page is one
+    $page = isset($_GET['page']) ? $_GET['page'] : 1;
 
-// calculate for the query LIMIT clause
-$from_record_num = ($records_per_page * $page) - $records_per_page;
+    // set number of records per page
+    $records_per_page = 5;
 
-// include database and object files
-include_once 'config/databaseC.php';
-include_once 'objects/podaci.php';
+    // calculate for the query LIMIT clause
+    $from_record_num = ($records_per_page * $page) - $records_per_page;
 
-// instantiate database and row object
-$database = new \config\databaseC();
-$db = $database->getConnection();
+    // include database and object files
+    include_once 'config/databaseC.php';
+    include_once 'objects/podaci.php';
 
-$podaci = new \objects\podaci($db);
+    // instantiate database and row object
+    $database = new \config\databaseC();
+    $db = $database->getConnection();
 
-// query rows
-$stmt = $podaci->readAll($page, $from_record_num, $records_per_page);
-$num = $stmt->rowCount();
+    $podaci = new \objects\podaci($db);
 
-// display the rows if there are any
-if($num>0){
+    // query rows
+    $stmt = $podaci->readAll($page, $from_record_num, $records_per_page);
+    $num = $stmt->rowCount();
 
-    echo "<table class='table table-hover table-responsive table-bordered'>";
-    echo "<tr>";
-    echo "<th>Iznos oročenja</th>";
-    echo "<th>Period oročenja</th>";
-    echo "<th>Kamatna stopa</th>";
-    echo "<th>Ukupna ostvarne kamata</th>";
-    echo "<th>Ukupna štednja</th>";
-    echo "</tr>";
+    // display the rows if there are any
+    if($num>0){
 
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-
-        extract($row);
-
+        echo "<table class='table table-hover table-responsive table-bordered'>";
         echo "<tr>";
-        echo "<td>{$IznosOrocenja}</td>";
-        echo "<td>{$Porocenja}</td>";
-        echo "<td>{$Kstopa}</td>";
-        echo "<td>{$Kamate}</td>";
-        echo "<td>{$Tvrijednost}</td>";
-
-        echo "<td>";
-        echo "<a href='Podaci_update.php?id={$id}' class='btn btn-default left-margin'>Edit</a>";
-        echo "<a delete-id='{$id}' class='btn btn-default delete-object'>Delete</a>";
-        echo "</td>";
-
+        echo "<th>Iznos oročenja</th>";
+        echo "<th>Period oročenja</th>";
+        echo "<th>Kamatna stopa</th>";
+        echo "<th>Ukupna ostvarne kamata</th>";
+        echo "<th>Ukupna štednja</th>";
         echo "</tr>";
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+
+            extract($row);
+
+            echo "<tr>";
+            echo "<td>{$IznosOrocenja}</td>";
+            echo "<td>{$Porocenja}</td>";
+            echo "<td>{$Kstopa}</td>";
+            echo "<td>{$Kamate}</td>";
+            echo "<td>{$Tvrijednost}</td>";
+
+            echo "<td>";
+            echo "<a href='Podaci_update.php?id={$id}' class='btn btn-default left-margin'>Edit</a>";
+            echo "<a delete-id='{$id}' class='btn btn-default delete-object'>Delete</a>";
+            echo "</td>";
+
+            echo "</tr>";
+        }
+
+        echo "</table>";
+
+        include_once 'Lista_podaci.php';
     }
 
-    echo "</table>";
+    // tell the user there are no rows
+    else{
+        echo "<div>No rows found.</div>";
+    }
+} else {
 
-    include_once 'Lista_podaci.php';
-}
-
-// tell the user there are no rows
-else{
-    echo "<div>No rows found.</div>";
+    echo "<h5>Za prikaz podataka morate se <a href='public/login.php?action=login'>prijaviti</a> ili <a href='public/registration.php'>registrirati.</a></h5>";
 }
 
 include_once "footer.php";

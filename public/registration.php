@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Signin Template for Bootstrap</title>
+    <title>Registracija</title>
 
     <!-- Bootstrap core CSS -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -26,39 +26,39 @@
 <form class="form-horizontal" action='' method="POST">
   <fieldset>
     <div id="legend">
-      <legend class="">Register</legend>
+      <legend class="">Registriraj se</legend>
     </div>
     <div class="control-group">
       <!-- Username -->
-      <label class="control-label"  for="username">Username</label>
+      <label class="control-label"  for="username">Korisničko ime</label>
       <div class="controls">
         <input type="text" id="username" name="username" placeholder="" class="input-xlarge">
-        <p class="help-block">Username can contain any letters or numbers, without spaces</p>
+        <p class="help-block">Korisničko ime može sadržavati bilo koje slovo ili broj, bez razmaka.</p>
       </div>
     </div>
  
     <div class="control-group">
       <!-- Password-->
-      <label class="control-label" for="password">Password</label>
+      <label class="control-label" for="password">Lozinka</label>
       <div class="controls">
         <input type="password" id="password" name="password" placeholder="" class="input-xlarge">
-        <p class="help-block">Password should be at least 4 characters</p>
+        <p class="help-block">Lozinka mora imati najmanje 4 znaka.</p>
       </div>
     </div>
  
     <div class="control-group">
       <!-- Password -->
-      <label class="control-label"  for="password_confirm">Password (Confirm)</label>
+      <label class="control-label"  for="password_confirm">Lozinka (Potvrda)</label>
       <div class="controls">
         <input type="password" id="password_confirm" name="password_confirm" placeholder="" class="input-xlarge">
-        <p class="help-block">Please confirm password</p>
+        <p class="help-block">Potvrdite Vašu lozinku.</p>
       </div>
     </div>
  
     <div class="control-group">
       <!-- Button -->
       <div class="controls">
-        <button type="submit" class="btn btn-success" name="submit">Register</button>
+        <button type="submit" class="btn btn-success" name="submit">Potvrdi</button>
       </div>
       <p>Ako ste već registrirani možete se prijaviti <a href="login.php?action=login">ovdje.</a></p>
     </div>

@@ -11,7 +11,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Signin Template for Bootstrap</title>
+    <title>Prijava</title>
 
     <!-- Bootstrap core CSS -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -26,19 +26,19 @@
     <div class="container">
 
       <form class="form-signin" method="post" action="">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <label for="inputEmail" class="sr-only">Username</label>
-        <input type="text" id="username" name="username" class="form-control" placeholder="Enter username" required autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+        <h2 class="form-signin-heading">Prijavite se</h2>
+        <label for="inputEmail" class="sr-only">Korisničko ime</label>
+        <input type="text" id="username" name="username" class="form-control" placeholder="Upišite korisničko ime" required autofocus>
+        <label for="inputPassword" class="sr-only">Lozinka</label>
+        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Lozinka" required>
         <div class="checkbox">
           <label>
-            <input type="checkbox" value="remember-me"> Remember me
+            <input type="checkbox" value="remember-me"> Zapamti me
           </label>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit" name="submit">Sign in</button> 
-        <h3>OR</h3>
-        <a href="registration.php"><button class="btn btn-lg btn-primary btn-block" type="button" name="login">Register</button></a>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" name="submit">Prijava</button> 
+        <h4 class="text-center">ili</h4>
+        <a href="registration.php"><button class="btn btn-lg btn-primary btn-block" type="button" name="login">Registracija</button></a>
       </form>
 
     </div> <!-- /container -->
