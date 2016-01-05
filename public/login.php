@@ -1,4 +1,26 @@
-<?php session_start() ?>
+<?php 
+session_start();
+
+  // get database connection
+  include_once '../config/databaseC.php';
+  $database = new \config\databaseC();
+  $db = $database->getConnection();
+
+  include_once '../objects/users.php';
+
+  if(isset($_POST['submit'])) {
+
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    $user = new \users\Users($db, $username, $password, null);
+
+  } else if($_GET['action'] == 'logout') {
+
+      session_destroy();
+      echo "<h3 class='text-center'>Odjavljeni ste.</h3>";
+  }
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -28,9 +50,9 @@
       <form class="form-signin" method="post" action="">
         <h2 class="form-signin-heading">Prijavite se</h2>
         <label for="inputEmail" class="sr-only">Korisničko ime</label>
-        <input type="text" id="username" name="username" class="form-control" placeholder="Upišite korisničko ime" required autofocus>
+        <input type="text" id="username" name="username" class="form-control" placeholder="Upišite korisničko ime" maxlength="50" required autofocus>
         <label for="inputPassword" class="sr-only">Lozinka</label>
-        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Lozinka" required>
+        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Lozinka" maxlength="50" required>
         <div class="checkbox">
           <label>
             <input type="checkbox" value="remember-me"> Zapamti me
@@ -45,27 +67,3 @@
 
   </body>
 </html>
-
-<?php
-
-  // get database connection
-  include_once '../config/databaseC.php';
-  $database = new \config\databaseC();
-  $db = $database->getConnection();
-
-  include_once '../objects/users.php';
-
-  if(isset($_POST['submit'])) {
-
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-
-    $user = new \users\Users($db, $username, $password, null);
-
-  } else if($_GET['action'] == 'logout') {
-
-      session_destroy();
-      echo "<h3 class='text-center'>You are loged out.</h3>";
-  }
-
-?>

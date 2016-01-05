@@ -8,8 +8,8 @@ include_once "header.php";
 <?php
 if(isset($_SESSION['username'])) {
 
-echo "You are loged in as: " . $_SESSION['username'] . "<br>";
-echo "<a href='public/login.php?action=logout'>Log out</a>";
+echo "Prijavljeni ste kao: " . $_SESSION['username'] . "<br>";
+echo "<a href='public/login.php?action=logout'>Odjavi se</a>";
 echo "<div class='right-button-margin'>";
 echo "<a href='Kalkulacija.php' class='btn btn-default pull-right'>Prikaži podatke o štednji</a>";
 echo "</div>";
@@ -23,30 +23,41 @@ $db = $database->getConnection();
 // if the form was submitted
 if($_POST){
 
+    include_once 'helpers/validation.php';
     include_once 'objects/podaci.php';
+
     $podaci = new \objects\podaci($db);
 
-    $podaci->iznosOrocenja = $_POST['iznosOrocenja'];
-    $podaci->periodOrocenja = $_POST['periodOrocenja'];
-    $podaci->kamatnaStopa = $_POST['kamatnaStopa'];
-    $podaci->zbrojKamata = $_POST['zbrojKamata'];
-    $podaci->trenutnaVrijednost = $_POST['trenutnaVrijednost'];
+    $iznos = $_POST['iznosOrocenja'];
+    $period = $_POST['periodOrocenja'];
+    $stopa = $_POST['kamatnaStopa'];
+    $kamate = $_POST['zbrojKamata'];
+    $vrijednost = $_POST['trenutnaVrijednost'];
 
+    $podaci->iznosOrocenja = $iznos;
+    $podaci->periodOrocenja = $period;
+    $podaci->kamatnaStopa = $stopa;
+    $podaci->zbrojKamata = $kamate;
+    $podaci->trenutnaVrijednost = $vrijednost;  
 
-    if($podaci->create()){
+    if(validate_input($iznos, 1, 50) && validate_input($period, 1, 10) && validate_input($stopa, 1, 25) && validate_input($kamate, 1, 50) && validate_input($vrijednost, 1, 50)) {
+
+        if($podaci->create()) {
+
         echo "<div class=\"alert alert-success alert-dismissable\">";
         echo "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>";
         echo "Podaci su spremljeni.";
         echo "</div>";
-    }
+        }
 
-    else{
+    } else {
+
         echo "<div class=\"alert alert-danger alert-dismissable\">";
         echo "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>";
         echo "Pohranjivanje podataka nije uspjelo.";
         echo "</div>";
-    }
-}   
+        }
+    }   
 
 ?>
 

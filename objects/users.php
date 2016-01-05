@@ -43,7 +43,7 @@ class Users {
 
     	} else {
 
-    		echo "Wrong username and password";
+    		echo "<h3 class='text-center'>Pogrešno korisničko ime ili lozinka</h3>";
     	}
 
     }

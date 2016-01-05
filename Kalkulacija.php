@@ -6,7 +6,7 @@ include_once "header.php";
 
 if(isset($_SESSION['username'])) {
 
-    echo "<p><a href='public/login.php?action=logout'>Log out</a></p>";
+    echo "<p><a href='public/login.php?action=logout'>Odjavi se</a></p>";
     echo "<div class='right-button-margin'>";
     echo "<a href='index.php' class='btn btn-default pull-right'>Izračunaj štednju</a>";
     echo "</div>";

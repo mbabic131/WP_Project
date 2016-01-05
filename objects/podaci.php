@@ -9,7 +9,6 @@
 
 namespace objects;
 
-
 class podaci {
 
     // database connection and table name
@@ -146,10 +145,14 @@ class podaci {
 
         // execute the query
         if($stmt->execute()){
+
             return true;
-        }else{
+
+        } else {
+
             return false;
         }
+
     }
 
     function delete(){
@@ -163,6 +166,25 @@ class podaci {
             return true;
         }else{
             return false;
+        }
+    }
+
+    function message($check) {
+
+        if($check) {
+
+            echo "<div class=\"alert alert-success alert-dismissable\">";
+            echo "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>";
+            echo "Podaci u izmijenjeni.";
+            echo "</div>";
+
+        } else {
+
+            // if unable to update the row, tell the user
+            echo "<div class=\"alert alert-danger alert-dismissable\">";
+            echo "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>";
+            echo "Neuspješna izmjena podataka.";
+            echo "</div>";
         }
     }
 

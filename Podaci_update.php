@@ -30,9 +30,22 @@ if(isset($_SESSION['username'])) {
     // read the details of row to be edited
     $podaci->readOne();
 
+    if(isset($_GET['success'])) {
+
+        $podaci->message($podaci->update());
+    }
+
+    if(isset($_GET['warning'])) {
+
+        echo "<div class=\"alert alert-danger alert-dismissable\">";
+        echo "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>";
+        echo "Niste unijeli ispravne podatke.";
+        echo "</div>";
+    }
+
 ?>
 
-<form action='Podaci_update.php?id=<?php echo $id; ?>' method='post'>
+<form action='' method='post'>
 
     <table class='table table-hover table-responsive table-bordered'>
 
@@ -64,7 +77,7 @@ if(isset($_SESSION['username'])) {
         <tr>
             <td></td>
             <td>
-                <button type="submit" class="btn btn-primary">Izmjeni</button>
+                <button type="submit" name="submit" class="btn btn-primary">Izmjeni</button>
             </td>
         </tr>
 
@@ -72,32 +85,37 @@ if(isset($_SESSION['username'])) {
 </form>
 
 <?php
+include_once 'helpers/validation.php';
 // if the form was submitted
-if($_POST){
+if(isset($_POST['submit'])){
 
     // set row property values
-    $podaci->iznosOrocenja = $_POST['iznosOrocenja'];
-    $podaci->periodOrocenja = $_POST['periodOrocenja'];
-    $podaci->kamatnaStopa = $_POST['kamatnaStopa'];
-    $podaci->zbrojKamata = $_POST['zbrojKamata'];
-    $podaci->trenutnaVrijednost = $_POST['trenutnaVrijednost'];
+    $iznos = $_POST['iznosOrocenja'];
+    $period = $_POST['periodOrocenja'];
+    $stopa = $_POST['kamatnaStopa'];
+    $kamate = $_POST['zbrojKamata'];
+    $vrijednost = $_POST['trenutnaVrijednost'];
 
-    // update the row
-    if($podaci->update()){
-        echo "<div class=\"alert alert-success alert-dismissable\">";
-        echo "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>";
-        echo "Podaci u izmijenjeni.";
-        echo "</div>";
-    }
+    $podaci->iznosOrocenja = $iznos;
+    $podaci->periodOrocenja = $period;
+    $podaci->kamatnaStopa = $stopa;
+    $podaci->zbrojKamata = $kamate;
+    $podaci->trenutnaVrijednost = $vrijednost;
 
-    // if unable to update the row, tell the user
-    else{
-        echo "<div class=\"alert alert-danger alert-dismissable\">";
-        echo "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>";
-        echo "Neuspješna izmjena podataka.";
-        echo "</div>";
+    if(validate_input($iznos, 1, 50) && validate_input($period, 1, 10) && validate_input($stopa, 1, 25) && validate_input($kamate, 1, 50) && validate_input($vrijednost, 1, 50))
+    {
+        // update the row
+        if($podaci->update()) {
+
+            header("Location: Podaci_update.php?id=$id&success");
+        }
+
+    } else {
+
+            header("Location: Podaci_update.php?id=$id&warning");
     }
 }
+ 
 ?>
 
 <?php } ?>
