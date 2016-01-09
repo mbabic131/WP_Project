@@ -1,5 +1,6 @@
 <?php
 session_start();
+include 'public/modal_delete.php';
 
 $page_title = "Podaci o štednji";
 include_once "header.php";
@@ -10,6 +11,23 @@ if(isset($_SESSION['username'])) {
     echo "<div class='right-button-margin'>";
     echo "<a href='index.php' class='btn btn-default pull-right'>Izračunaj štednju</a>";
     echo "</div>";
+
+    //show the message if the user are deleted some data
+    if(isset($_GET['deleted'])) {
+
+        echo "<div class=\"alert alert-success alert-dismissable\">";
+        echo "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>";
+        echo "Podaci su uspješno obrisani";
+        echo "</div>";
+    }
+
+    elseif(isset($_GET['warning'])) {
+
+        echo "<div class=\"alert alert-danger alert-dismissable\">";
+        echo "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>";
+        echo "Pogreška prilikom brisanja podataka.";
+        echo "</div>";
+    }
 
     // page given in URL parameter, default page is one
     $page = isset($_GET['page']) ? $_GET['page'] : 1;
@@ -44,9 +62,10 @@ if(isset($_SESSION['username'])) {
         echo "<th>Kamatna stopa</th>";
         echo "<th>Ukupna ostvarne kamata</th>";
         echo "<th>Ukupna štednja</th>";
+        echo "<th>#</th>";
         echo "</tr>";
 
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
             extract($row);
 
@@ -59,7 +78,8 @@ if(isset($_SESSION['username'])) {
 
             echo "<td>";
             echo "<a href='Podaci_update.php?id={$id}' class='btn btn-default left-margin'>Edit</a>";
-            echo "<a delete-id='{$id}' class='btn btn-default delete-object'>Delete</a>";
+            //echo "<a delete-id='{$id}' class='btn btn-default delete-object'>Delete</a>";
+            echo "<a rel='$id' href='javascript:void(0)' class='delete_link btn btn-default'>Delete</a>";
             echo "</td>";
 
             echo "</tr>";
@@ -68,22 +88,25 @@ if(isset($_SESSION['username'])) {
         echo "</table>";
 
         include_once 'Lista_podaci.php';
+
+    } else {
+
+        echo "<hr><div class='col-md-6 col-md-offset-3'><h3 style='text-center'>Nemate spremljenih podataka.</h3></div>";
     }
 
-    // tell the user there are no rows
-    else{
-        echo "<div>No rows found.</div>";
-    }
 } else {
 
     echo "<h5>Za prikaz podataka morate se <a href='public/login.php?action=login'>prijaviti</a> ili <a href='public/registration.php'>registrirati.</a></h5>";
 }
 
 include_once "footer.php";
+
 ?>
 
 <script>
-    $(document).on('click', '.delete-object', function(){
+
+//Old version of delete function
+/*    $(document).on('click', '.delete-object', function(){
 
         var id = $(this).attr('delete-id');
         var q = confirm("Jeste li sigurni?");
@@ -101,5 +124,22 @@ include_once "footer.php";
         }
 
         return false;
+    });*/
+
+
+//Show the delete modal and include delete page
+    $(document).ready(function(){
+        
+        $(".delete_link").on("click", function() {
+            
+            var id = $(this).attr("rel");
+            var delete_url = "Podaci_delete.php?id="+id;
+            
+            $(".modal_delete_link").attr("href", delete_url);
+            
+            $("#myModal").modal('show');
+            
+        });
     });
+
 </script>

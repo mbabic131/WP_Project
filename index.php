@@ -59,6 +59,7 @@ if($_POST){
         }
     }   
 
+    include_once 'public/modal_message.php';
 ?>
 
     <html>

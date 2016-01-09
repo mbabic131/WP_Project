@@ -53,11 +53,7 @@ session_start();
         <input type="text" id="username" name="username" class="form-control" placeholder="Upišite korisničko ime" maxlength="50" required autofocus>
         <label for="inputPassword" class="sr-only">Lozinka</label>
         <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Lozinka" maxlength="50" required>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="remember-me"> Zapamti me
-          </label>
-        </div>
+
         <button class="btn btn-lg btn-primary btn-block" type="submit" name="submit">Prijava</button> 
         <h4 class="text-center">ili</h4>
         <a href="registration.php"><button class="btn btn-lg btn-primary btn-block" type="button" name="login">Registracija</button></a>

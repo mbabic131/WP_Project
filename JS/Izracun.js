@@ -13,15 +13,18 @@ function validacijaUnesenihPodataka() {
 	var period = document.mojaforma.periodOrocenja.value;
 						//ako je u polje iznos unešeno nešto što nije broj tada izbaci alert poruku
 	if (iznos <= 0 || isNaN(Number(iznos)) ) {
-		alert("Niste unijeli pravilan iznos oročenja!");
+		//alert("Niste unijeli pravilan iznos oročenja!");
+		$("#iznosModal").modal('show');
 		document.mojaforma.iznosOrocenja.value = ""; //isprazni polje u koje su uneseni krivi podaci
 		}
 	else if (stopa <= 0 || isNaN(Number(stopa)) ) {
-		alert("Niste unijeli pravilnu kamatnu stopu!");
+		//alert("Niste unijeli pravilnu kamatnu stopu!");
+		$("#stopaModal").modal('show');
 		document.mojaforma.kamatnaStopa.value = ""; //isprazni polje u koje su uneseni krivi podaci
 		}
 	else if (period <= 0 || isNaN(Number(period)) ) {
-		alert("Niste unijeli pravilan iznos perioda oročenja!");
+		//alert("Niste unijeli pravilan iznos perioda oročenja!");
+		$("#periodModal").modal('show');
 		document.mojaforma.periodOrocenja.value = ""; //isprazni polje u koje su uneseni krivi podaci
 		}
 	else {
@@ -52,7 +55,6 @@ function izracunaj(iznos, period, stopa) {
     ispis += "</tr>";
 
     document.getElementById("tablica").innerHTML = ispis;
-
 	}
 
 //funkcija koja zaokružuje broj na dvije decimale

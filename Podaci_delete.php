@@ -1,6 +1,6 @@
 <?php
-// check if value was posted
-if($_POST){
+
+if(isset($_GET['id'])){
 
     // include database and object file
     include_once 'config/databaseC.php';
@@ -14,17 +14,18 @@ if($_POST){
     $podaci = new \objects\podaci($db);
 
     // set row id to be deleted
-    $podaci->id = $_POST['object_id'];
+    $podaci->id = $_GET['id'];
 
     // delete the row
     if($podaci->delete()){
-        echo "Podaci su obrisani.";
+
+        header("Location: Kalkulacija.php?deleted");
     }
 
     // if unable to delete the row
-    else{
-        echo "Brisanje podataka nije uspjelo.";
+    else {
 
+        header("Location: Kalkulacija.php?warning");
     }
 }
 ?>
